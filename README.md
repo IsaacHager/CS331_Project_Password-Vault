@@ -16,7 +16,7 @@ Group repository for CS331 project to implement a simple password vault.
     to a file.
   README.md - This file
 
-### Project Overview
+## Project Overview
 
 In this project, students will complete a project to apply computer security concepts
 learned in class. Projects will be chosen by students from the list of projects provided or
@@ -25,12 +25,13 @@ fundamental security concepts such as the CIA triad, authentication, access cont
 cryptography, and assurance.
 
   Each project should have the following phases:
-    - Design: Students prepare a project plan including objectives, scope, and
+  
+  - Design: Students prepare a project plan including objectives, scope, and
             methodology.
-    - Implementation: Students develop a working demo, or tool.
-    - Documentation: Students write a short report describing design, methods, results,
+  - Implementation: Students develop a working demo, or tool.
+  - Documentation: Students write a short report describing design, methods, results,
             and lessons learned.
-    - Presentation: Students present their work to the class in the final weeks.
+  - Presentation: Students present their work to the class in the final weeks.
 
 ### Suggested Project Ideas
   - Authentication Using Password and Secret Questions
