@@ -5,10 +5,13 @@ Group repository for CS331 project to implement a simple password vault.
 *Temporary inclusion for convenience
 
 ### Description of Files
+
   UserLoginUI.java - Simple Java command line implementation of an interface to allow users to 
     add passwords to database and 'login'.
+    
   PasswordManager.java - Provides functionality for encrypting and adding passwords to the database,
     verifying passwords, etc.
+    
   PasswordDatabase.java - Contains an array of users and functionality to write and read stored data
     to a file.
   README.md - This file
