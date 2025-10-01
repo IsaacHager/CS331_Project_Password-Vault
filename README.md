@@ -4,6 +4,11 @@ Group repository for CS331 project to implement a simple password vault.
 ## Project Desc.
 *Temporary inclusion for convenience
 
+### Description of Files
+  UserLoginUI.java - Simple Java command line implementation of an interface to allow users to 
+    add passwords to database and 'login'.
+  README.md - This file
+
 ### Project Overview
 
 In this project, students will complete a project to apply computer security concepts
