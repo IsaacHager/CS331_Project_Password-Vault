@@ -24,10 +24,10 @@ cryptography, and assurance.
   - Authentication Using Password and Secret Questions
       Description: Build a login system that uses both password and secret questions.
       Concepts: Authentication, Availability.
-  - Simple Password Vault
-      Description: Develop a password manager that stores passwords in an encoded
+  - **Simple Password Vault**
+      **Description: Develop a password manager that stores passwords in an encoded
         form (e.g., basic hashing or reversible encoding).
-      Concepts: Authentication, Confidentiality, Secure storage.
+      Concepts: Authentication, Confidentiality, Secure storage.**
   - Caesar Cipher
       Description: Build a program that implements Caesar cipher and allows users to try
         brute-force attacks to break them.
