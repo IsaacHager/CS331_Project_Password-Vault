@@ -5,5 +5,13 @@
  * @author Isaac Hager
  */
 public class PasswordManager {
-    // TODO implement class
+    private final PasswordDatabase db;
+
+    /**
+     * Constructor
+     * @param db the PasswordDatabase to use for storage
+     */
+    public PasswordManager(PasswordDatabase db) {
+        this.db = db;
+    }
 }
