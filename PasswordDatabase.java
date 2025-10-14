@@ -1,6 +1,11 @@
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 /**
  * Given hashed passwords, store and retrieve them to a local file.
@@ -17,12 +22,24 @@ public class PasswordDatabase {
     * @param filename the file to store users in
     */
     public PasswordDatabase(String filename) {
+        this.passwordHashMap = new HashMap<String, String>();
         this.dbFile = new File(filename);
 
         // Creates file if it doesn't exist
         try {
             if (!dbFile.exists()) {
                 dbFile.createNewFile();
+            } else {
+                Scanner lineScan = new Scanner(dbFile);
+                Scanner splitter;
+                while (lineScan.hasNextLine()) {
+                    splitter = new Scanner(lineScan.nextLine());
+                    String username = splitter.next();
+                    String passwordHash = splitter.next();
+                    this.passwordHashMap.put(username, passwordHash);
+                    splitter.close();
+                }
+                lineScan.close();
             }
         } catch (IOException e) {
             throw new RuntimeException("Could not create database file", e);
@@ -36,6 +53,7 @@ public class PasswordDatabase {
      */
     public void add(String username, String passwordHash) {
         passwordHashMap.put(username, passwordHash);
+        updateDatabase();   // In the future, this should only be called once the session ends
     }
 
     /**
@@ -44,6 +62,7 @@ public class PasswordDatabase {
      */
     public void remove(String username) {
         passwordHashMap.remove(username);
+        updateDatabase();   // In the future, this should only be called once the session ends
     }
 
     /**
@@ -59,8 +78,24 @@ public class PasswordDatabase {
      * Writes new hashmap information to the database file
      */
     private void updateDatabase() {
-        // TODO implement method
-        throw new UnsupportedOperationException("Unimplemented method updateDatabase");
+        FileOutputStream outputStream;
+        PrintWriter pw;
+        try {
+            outputStream = new FileOutputStream(dbFile, false);
+            pw = new PrintWriter(outputStream);
+            for (Map.Entry<String, String> e : passwordHashMap.entrySet()) {
+                pw.print(e.getKey());
+                pw.print(" ");
+                pw.print(e.getValue());
+                pw.println();
+            }
+            pw.close();
+            outputStream.close();
+        } catch (Exception e) {
+            // TODO: handle Exception
+        }
+
+        System.out.print("Done\n");
     }
 
 }

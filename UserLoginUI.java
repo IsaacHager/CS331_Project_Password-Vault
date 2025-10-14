@@ -37,6 +37,8 @@ public class UserLoginUI {
     } else if (ui.mode.equals("login")) {
       if (ui.pm.verifyPassword(ui.username, ui.password)) {
         System.out.println("Login successful"); // This is all that logging in currently does.
+      } else {
+        System.out.println("Login failed");
       }
     } else {
       System.out.println("Invalid mode. This should never happen.");
