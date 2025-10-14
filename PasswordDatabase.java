@@ -91,11 +91,11 @@ public class PasswordDatabase {
             }
             pw.close();
             outputStream.close();
-        } catch (Exception e) {
-            // TODO: handle Exception
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Could not find database file: " + dbFile.getName(), e);
+        } catch (IOException e) {
+            throw new RuntimeException("Error while writing to database file", e);
         }
-
-        System.out.print("Done\n");
     }
 
 }
