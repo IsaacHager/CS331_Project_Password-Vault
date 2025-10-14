@@ -9,8 +9,9 @@ Group repository for CS331 project to implement a simple password vault.
   PasswordManager.java - Provides functionality for encrypting and adding passwords to the database,
     verifying passwords, etc.
     
-  PasswordDatabase.java - Contains an array of users and functionality to write and read stored data
+  PasswordDatabase.java - Contains a hashmap of passwords and usernames and functionality to write and read stored data
     to a file.
+    
   README.md - This file
   
 ## Project Desc.
