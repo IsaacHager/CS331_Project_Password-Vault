@@ -20,9 +20,10 @@ public class UserLoginUI {
   private String username;
   private String password;
   private int debugLvl;
+  private PasswordManager pm;
 
   /**
-   * TODO javadoc
+   * Runs the UI for a user to login or add other users
    * @param args
    */
   public static void main(String[] args) {
@@ -32,15 +33,11 @@ public class UserLoginUI {
     }
 
     if (ui.mode.equals("add")) {
-      // TODO implement add user
-      System.out.println("Add user not yet implemented.");
-      /*
-       * Use a password manager class to handle adding users and verifying passwords.
-       * Use a database class to handle hashed password storage.
-       */
+      ui.pm.addUser(ui.username, ui.password);
     } else if (ui.mode.equals("login")) {
-      // TODO implement login user
-      System.out.println("Login user not yet implemented.");
+      if (ui.pm.verifyPassword(ui.username, ui.password)) {
+        System.out.println("Login successful"); // This is all that logging in currently does.
+      }
     } else {
       System.out.println("Invalid mode. This should never happen.");
     }
@@ -50,7 +47,7 @@ public class UserLoginUI {
    * Basic constructor.
    */
   public UserLoginUI() {
-    // TODO implement method
+    pm = new PasswordManager();
   }
 
   /**
@@ -64,7 +61,6 @@ public class UserLoginUI {
     boolean valid = true;
     /* Check Length */
     if (args.length < 3 || args.length > 4) {
-      System.out.println("Invalid number of arguments.");
       System.out.println(USAGE);
       valid = false;
     } else {
@@ -110,50 +106,4 @@ public class UserLoginUI {
     }
     return valid;
   }
-
-  /**
-   * Represents a user with a username and an encrypted password.
-   * 
-   * @version 1.0
-   * @author Isaac Hager
-   */
-  private class User {
-    private String username;
-    private String passwordHash;
-
-    /**
-     * Basic constructor.
-     * @param username
-     * @param passwordHash
-     */
-    public User(String username, String passwordHash) {
-      this.username = username;
-      this.passwordHash = passwordHash;
-    }
-
-    /**
-     * Returns username.
-     * @return username
-     */
-    public String getUsername() {
-      return username;
-    }
-
-    /**
-     * Sets username.
-     * @param username
-     */
-    public void changeUsername(String username) {
-      this.username = username;
-    }
-
-    /**
-     * Returns password hash.
-     * @return password hash
-     */
-    public String getPasswordHash() {
-      return passwordHash;
-    }
-  }
-
 }
