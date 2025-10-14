@@ -1,6 +1,7 @@
 /**
  * Helper class to store password hashes for constant-time lookup.
  * // TODO research and confirm validity of hash principles used
+ * // TODO replace with java util hashmap if prudent
  * @author isaachager
  */
 private class PasswordHashmap {
