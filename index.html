@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Password Manager - User Login UI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f3f3;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 28px 32px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin-top: 0;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .usage {
+            font-size: 12px;
+            color: #555;
+            background: #fafafa;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 18px;
+            white-space: pre-line;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px 10px;
+            margin-top: 6px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .hint {
+            font-size: 11px;
+            color: #777;
+        }
+
+        .button-row {
+            margin-top: 18px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        button {
+            padding: 8px 16px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .note {
+            margin-top: 10px;
+            font-size: 11px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Password Manager</h1>
+
+        <div class="usage">
+            Usage (CLI equivalent):
+            java UserLoginUI &lt;add|login&gt; &lt;username&gt; &lt;password&gt; [&lt;debug_lvl&gt;]
+
+            where:
+            add      - adds a user to the database
+            login    - verifies a user against the database
+            username - [A-Za-z0-9_]{1,16}
+            password - [A-Za-z0-9_!@#$%^&*()]{1,16}
+            debug_lvl - currently unused, defaults to 0
+        </div>
+
+        <!-- Adjust action/method for your backend -->
+        <form action="/user-login" method="post">
+            <label for="mode">Mode</label>
+            <select id="mode" name="mode" required>
+                <option value="">-- Select Mode --</option>
+                <option value="add">add (create user)</option>
+                <option value="login">login (verify user)</option>
+            </select>
+            <div class="hint">Must be either <code>add</code> or <code>login</code>.</div>
+
+            <label for="username">Username</label>
+            <input
+                type="text"
+                id="username"
+                name="username"
+                required
+                minlength="1"
+                maxlength="16"
+                pattern="[A-Za-z0-9_]{1,16}"
+                title="1–16 characters: letters, digits, and underscore only."
+            />
+            <div class="hint">Allowed: letters, digits, and underscore. Length: 1–16.</div>
+
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                minlength="1"
+                maxlength="16"
+                pattern="[A-Za-z0-9_!@#$%^&*()]{1,16}"
+                title="1–16 characters: letters, digits, underscore, and !@#$%^&*()"
+            />
+            <div class="hint">Allowed: letters, digits, underscore, and !@#$%^&*(). Length: 1–16.</div>
+
+            <div class="button-row">
+                <button type="reset" class="btn-secondary">Reset</button>
+                <button type="submit" class="btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
