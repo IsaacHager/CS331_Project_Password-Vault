@@ -1,3 +1,10 @@
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
+
 /**
  * Simple command line user interface. Allows users to
  * add a password to the password database as well as
@@ -11,16 +18,21 @@
  *        debug_lvl - currently unused, defaults to 0
  * 
  * @version 1.0
- * @author Isaac Hager
+ * @author Isaac Hager and Tanner Klinge
  */
-public class UserLoginUI {
+
+public class UserLoginUI extends JFrame implements ActionListener {
   private final String USAGE = "Usage: $ java UserLoginUI <add|login> <username> <password> [<debug_lvl>]";
-  private final boolean DEBUG_SUPPORTED = false;
   private String mode;
   private String username;
   private String password;
-  private int debugLvl;
   private PasswordManager pm;
+  private JLabel usernameLabel; 
+  private JLabel passwordLabel;
+  private JTextField usernameField;
+  private JTextField passwordField;
+
+
 
   /**
    * Runs the UI for a user to login or add other users
@@ -28,6 +40,11 @@ public class UserLoginUI {
    */
   public static void main(String[] args) {
     UserLoginUI ui = new UserLoginUI();
+    ui.parseArgs(args);
+    ui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    ui.pack();
+    ui.setVisible(true);
+
     if (!ui.parseArgs(args)) {
       return;
     }
@@ -43,6 +60,7 @@ public class UserLoginUI {
     } else {
       System.out.println("Invalid mode. This should never happen.");
     }
+
   }
 
   /**
@@ -50,7 +68,104 @@ public class UserLoginUI {
    */
   public UserLoginUI() {
     pm = new PasswordManager();
+    // Used to specify GUI component layout
+      GridBagConstraints layoutConst = null;
+
+      //title
+      setTitle("Vault");
+
+      //new Labels
+      usernameLabel = new JLabel("Username:");
+      passwordLabel = new JLabel("Password:");
+
+       // Set username
+      usernameField = new JTextField(15);
+      usernameField.setEditable(true);
+      usernameField.setText("");
+      usernameField.addActionListener(this);
+
+      // set password
+      passwordField = new JTextField(15);
+      passwordField.setEditable(true);
+      passwordField.setText("");
+      passwordField.addActionListener(this);
+
+      // enter button
+      JButton submitButton = new JButton("Submit");
+      submitButton.addActionListener(this);
+
+      
+      // Use a GridBagLayout
+      setLayout(new GridBagLayout());
+      layoutConst = new GridBagConstraints();
+
+      // Specify component's grid location
+      layoutConst.gridx = 0;
+      layoutConst.gridy = 0;
+
+      // 10 pixels of padding around component
+      layoutConst.insets = new Insets(10, 10, 10, 10);
+
+      // Add component using the specified constraints
+      add(usernameLabel, layoutConst);
+
+      layoutConst = new GridBagConstraints();
+      layoutConst.gridx = 1;
+      layoutConst.gridy = 0;
+      layoutConst.insets = new Insets(10, 10, 10, 10);
+      add(usernameField, layoutConst);
+
+      layoutConst = new GridBagConstraints();
+      layoutConst.gridx = 0;
+      layoutConst.gridy = 1;
+      layoutConst.insets = new Insets(10, 10, 10, 10);
+      add(passwordLabel, layoutConst);
+
+      layoutConst = new GridBagConstraints();
+      layoutConst.gridx = 1;
+      layoutConst.gridy = 1;
+      layoutConst.insets = new Insets(10, 10, 10, 10);
+      add(passwordField, layoutConst);
+
+      layoutConst = new GridBagConstraints();
+      layoutConst.gridx = 1;
+      layoutConst.gridy = 2;
+      layoutConst.insets = new Insets(10, 10, 10, 10);
+      add(submitButton, layoutConst);
+
+    // Make Enter key activate this button
+getRootPane().setDefaultButton(submitButton);
   }
+
+  /* Method is automatically called when an event 
+    occurs (e.g, Enter key is pressed) */
+   @Override
+   public void actionPerformed(ActionEvent event) {
+
+      // Get user's username input
+      username = usernameField.getText();
+      
+      // Get user's password input
+      password = passwordField.getText();
+
+      if (mode == null) {
+      // If they opened the GUI without CLI args, default to login
+      mode = "login";
+    }
+
+      if (mode.equals("add")) {
+        pm.addUser(username, password);
+        JOptionPane.showMessageDialog(this, "User added successfully!");
+    } 
+      else if (mode.equals("login")) {
+        if (pm.verifyPassword(username, password)) {
+            JOptionPane.showMessageDialog(this, "Login successful!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Login failed.");
+        }
+    }
+   }
+
 
   /**
    * Parses command line arguments into class variables.
@@ -91,19 +206,6 @@ public class UserLoginUI {
         System.out.println("Invalid password. Must be 1-16 characters of [A-Za-z0-9_!@#$%^&*()].");
         System.out.println(USAGE);
         valid = false;
-      }
-
-      /* If debug is implemented, check fourth arg */
-      if (DEBUG_SUPPORTED && args.length == 4) {
-        try {
-          this.debugLvl = Integer.parseInt(args[3]);
-        } catch (NumberFormatException e) {
-          System.out.println("Debug level must be an integer.");
-          System.out.println(USAGE);
-          valid = false;
-        }
-      } else {
-        this.debugLvl = 0;
       }
     }
     return valid;
