@@ -1,10 +1,9 @@
-import com.sun.net.httpserver.HttpServer;
-import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.Headers;
-
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpServer;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -78,11 +77,11 @@ public class WebServer {
                 html = withBackLink("<h1>Error</h1><p>Invalid password.</p>");
             } else if ("add".equals(mode)) {
                 pm.addUser(username, password);
-                html = withBackLink("<h1>User added</h1><p>User '" + username + "' added.</p>");
+                html = withBackLink("<h1>User added</h1><p>User '" + username + "' succesfully added.</p>");
             } else if ("login".equals(mode)) {
                 boolean ok = pm.verifyPassword(username, password);
                 if (ok) {
-                    html = withBackLink("<h1>Login successful</h1><p>Welcome, " + username + ".</p>");
+                    html = withBackLink("<h1>Login successful</h1><p>Welcome back, " + username + "!</p>");
                 } else {
                     html = withBackLink("<h1>Login failed</h1><p>Incorrect username or password.</p>");
                 }
