@@ -10,6 +10,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class PasswordManager {
     private final PasswordDatabase db;
+    private final String SALT = "$@1+";
 
     /**
      * Constructor
@@ -75,6 +76,7 @@ public class PasswordManager {
      * @return hashed password
      */
     private String hashPassword(String password) {
+        password += SALT;
         String hashedPassword = null;
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
