@@ -105,8 +105,8 @@
             where:
             add      - adds a user to the database
             login    - verifies a user against the database
-            username - [A-Za-z0-9_]{1,16}
-            password - [A-Za-z0-9_!@#$%^&*()]{1,16}
+            username - [A-Za-z0-9_]{8,16}
+            password - [A-Za-z0-9_!@#$%^&*()]{8,16}
             debug_lvl - currently unused, defaults to 0
         </div>
 
@@ -127,12 +127,12 @@
                 name="username"
                 placeholder="e.g. vault_admin"
                 required
-                minlength="1"
+                minlength="8"
                 maxlength="16"
-                pattern="[A-Za-z0-9_]{1,16}"
-                title="1–16 characters: letters, digits, and underscore only."
+                pattern="[A-Za-z0-9_]{8,16}"
+                title="8–16 characters: letters, digits, and underscore only."
             />
-            <div class="hint">Allowed: letters, digits, and underscore. Length: 1–16.</div>
+            <div class="hint">Allowed: letters, digits, and underscore. Length: 8–16.</div>
 
             <label for="password">Password</label>
             <input
@@ -141,12 +141,12 @@
                 name="password"
                 placeholder="sample: Encrypt!9"
                 required
-                minlength="1"
+                minlength="8"
                 maxlength="16"
-                pattern="[A-Za-z0-9_!@#$%^&*()]{1,16}"
-                title="1–16 characters: letters, digits, underscore, and !@#$%^&*()"
+                pattern="[A-Za-z0-9_!@#$%^&*()]{8,16}"
+                title="8–16 characters: letters, digits, underscore, and !@#$%^&*()"
             />
-            <div class="hint">Allowed: letters, digits, underscore, and !@#$%^&*(). Length: 1–16.</div>
+            <div class="hint">Allowed: letters, digits, underscore, and !@#$%^&*(). Length: 8–16.</div>
 
             <div class="button-row">
                 <button type="reset" class="btn-secondary">Reset</button>
