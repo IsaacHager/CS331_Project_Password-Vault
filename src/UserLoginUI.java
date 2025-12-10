@@ -14,7 +14,7 @@
  * @author Isaac Hager
  */
 public class UserLoginUI {
-  private final String USAGE = "Usage: $ java UserLoginUI <add|login> <username> <password> [<debug_lvl>]";
+  private final String USAGE = "Usage: $ java UserLoginUI <add|login> <username> <password>";
   private final boolean DEBUG_SUPPORTED = false;
   private String mode;
   private String username;
