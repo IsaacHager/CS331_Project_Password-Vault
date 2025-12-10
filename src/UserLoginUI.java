@@ -76,19 +76,19 @@ public class UserLoginUI {
       }
 
       /* Second arg */
-      if (args[1].matches("[A-Za-z0-9_]{1,16}")) {
+      if (args[1].matches("[A-Za-z0-9_]{8,16}")) {
         this.username = args[1];
       } else {
-        System.out.println("Invalid username. Must be 1-16 characters of [A-Za-z0-9_].");
+        System.out.println("Invalid username. Must be 8-16 characters of [A-Za-z0-9_].");
         System.out.println(USAGE);
         valid = false;
       }
 
       /* Third arg */
-      if (args[2].matches("[A-Za-z0-9_!@#$%^&*()]{1,16}")) {
+      if (args[2].matches("[A-Za-z0-9_!@#$%^&*()]{8,16}")) {
         this.password = args[2];
       } else {
-        System.out.println("Invalid password. Must be 1-16 characters of [A-Za-z0-9_!@#$%^&*()].");
+        System.out.println("Invalid password. Must be 8-16 characters of [A-Za-z0-9_!@#$%^&*()].");
         System.out.println(USAGE);
         valid = false;
       }
