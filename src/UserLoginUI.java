@@ -9,7 +9,7 @@
  *        username - [A-Za-z0-9_]{1,16}
  *        password - [A-Za-z0-9_!@#$%^&*()]{1,16}
  *        debug_lvl - currently unused, defaults to 0
- * 
+ *
  * @version 1.0
  * @author Isaac Hager
  */
@@ -76,10 +76,10 @@ public class UserLoginUI {
       }
 
       /* Second arg */
-      if (args[1].matches("[A-Za-z0-9_]{8,16}")) {
+      if (args[1].matches("[A-Za-z0-9_]{4,16}")) {
         this.username = args[1];
       } else {
-        System.out.println("Invalid username. Must be 8-16 characters of [A-Za-z0-9_].");
+        System.out.println("Invalid username. Must be 4-16 characters of [A-Za-z0-9_].");
         System.out.println(USAGE);
         valid = false;
       }

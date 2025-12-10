@@ -105,7 +105,7 @@
             where:
             add      - adds a user to the database
             login    - verifies a user against the database
-            username - [A-Za-z0-9_]{8,16}
+            username - [A-Za-z0-9_]{4,16}
             password - [A-Za-z0-9_!@#$%^&*()]{8,16}
         </div>
 
@@ -114,10 +114,10 @@
             <label for="mode">Mode</label>
             <select id="mode" name="mode" required>
                 <option value="">-- Select Mode --</option>
-                <option value="add">add (create user)</option>
-                <option value="login">login (verify user)</option>
+                <option value="add">add (creates user)</option>
+                <option value="login">login (verifies user)</option>
             </select>
-            <div class="hint">Must be either <code>add</code> or <code>login</code>.</div>
+            <div class="hint">Must be either be add or login.</div>
 
             <label for="username">Username</label>
             <input
@@ -126,12 +126,12 @@
                 name="username"
                 placeholder="e.g. vault_admin"
                 required
-                minlength="8"
+                minlength="4"
                 maxlength="16"
-                pattern="[A-Za-z0-9_]{8,16}"
-                title="8–16 characters: letters, digits, and underscore only."
+                pattern="[A-Za-z0-9_]{4,16}"
+                title="4–16 characters: letters, digits, and underscore only."
             />
-            <div class="hint">Allowed: letters, digits, and underscore. Length: 8–16.</div>
+            <div class="hint">Allowed: letters, digits, and underscore. Length of: 4–16.</div>
 
             <label for="password">Password</label>
             <input
@@ -145,7 +145,7 @@
                 pattern="[A-Za-z0-9_!@#$%^&*()]{8,16}"
                 title="8–16 characters: letters, digits, underscore, and !@#$%^&*()"
             />
-            <div class="hint">Allowed: letters, digits, underscore, and !@#$%^&*(). Length: 8–16.</div>
+            <div class="hint">Allowed: letters, digits, underscore, and !@#$%^&*(). Length of: 8–16.</div>
 
             <div class="button-row">
                 <button type="reset" class="btn-secondary">Reset</button>
