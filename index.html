@@ -2,35 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>Password Manager - User Login UI</title>
+    <title>Password Manager - Login Demo</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f3f3f3;
+            background: #ececec;
             margin: 0;
             padding: 0;
         }
 
         .container {
-            max-width: 400px;
+            max-width: 420px;
             margin: 40px auto;
-            background: #ffffff;
-            padding: 28px 32px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background: #fff;
+            padding: 25px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
         }
 
         h1 {
-            margin-top: 0;
-            font-size: 24px;
             text-align: center;
+            margin: 0 0 15px 0;
         }
 
         .usage {
             font-size: 12px;
-            color: #555;
-            background: #fafafa;
-            border: 1px solid #ddd;
+            background: #f7f7f7;
+            border: 1px solid #ccc;
             padding: 10px;
             border-radius: 4px;
             margin-bottom: 18px;
@@ -46,51 +44,45 @@
 
         input[type="text"],
         input[type="password"],
-        input[type="number"],
         select {
             width: 100%;
-            padding: 8px 10px;
-            margin-top: 6px;
+            padding: 7px;
+            margin-top: 5px;
             border-radius: 4px;
-            border: 1px solid #ccc;
+            border: 1px solid #bbb;
             box-sizing: border-box;
             font-size: 14px;
         }
 
         .hint {
             font-size: 11px;
-            color: #777;
+            color: #666;
+            margin-top: 3px;
         }
 
         .button-row {
             margin-top: 18px;
             display: flex;
             justify-content: flex-end;
-            gap: 10px;
+            gap: 8px;
         }
 
         button {
-            padding: 8px 16px;
+            padding: 7px 14px;
             border-radius: 4px;
-            border: none;
+            border: 1px solid #aaa;
             cursor: pointer;
             font-size: 14px;
         }
 
         .btn-primary {
-            background: #007bff;
+            background: #4d8ae6;
             color: white;
+            border-color: #4d8ae6;
         }
 
         .btn-secondary {
-            background: #e0e0e0;
-            color: #333;
-        }
-
-        .note {
-            margin-top: 10px;
-            font-size: 11px;
-            color: #888;
+            background: #e6e6e6;
         }
     </style>
 </head>
@@ -99,53 +91,51 @@
         <h1>Password Manager</h1>
 
         <div class="usage">
-            Usage (CLI equivalent):
-            java UserLoginUI &lt;add|login&gt; &lt;username&gt; &lt;password&gt;
+            Command Line Usage Equivalent:
+            java UserLoginUI &lt;add|login&gt; &lt;username&gt; &lt;password&gt; 
 
-            where:
-            add      - adds a user to the database
-            login    - verifies a user against the database
-            username - [A-Za-z0-9_]{4,16}
-            password - [A-Za-z0-9_!@#$%^&*()]{8,16}
+            Where: 
+            Add - Adds a user to the database 
+            Login - Verifies a user against the database 
+            Username - [A-Za-z0-9_]{4,16} 
+            Password - [A-Za-z0-9_!@#$%^&*()]{8,16}
         </div>
 
-        <!-- Adjust action/method for your backend -->
+        <!-- Form for local testing -->
         <form action="http://localhost:8080/user-login" method="post">
-            <label for="mode">Mode</label>
+            <label for="mode">Mode:</label>
             <select id="mode" name="mode" required>
-                <option value="">-- Select Mode --</option>
-                <option value="add">add (creates user)</option>
-                <option value="login">login (verifies user)</option>
+                <option value="">-- choose one --</option>
+                <option value="add">Add (Creates user)</option>
+                <option value="login">Login (Checks user)</option>
             </select>
-            <div class="hint">Must be either be add or login.</div>
+            <div class="hint">Pick whether you're adding or logging in.</div>
 
-            <label for="username">Username</label>
+            <label for="username">Username:</label>
             <input
                 type="text"
                 id="username"
                 name="username"
-                placeholder="e.g. vault_admin"
+                placeholder="example: test_user"
                 required
                 minlength="4"
                 maxlength="16"
                 pattern="[A-Za-z0-9_]{4,16}"
-                title="4–16 characters: letters, digits, and underscore only."
             />
-            <div class="hint">Allowed: letters, digits, and underscore. Length of: 4–16.</div>
+            <div class="hint">Length of 4–16 characters: letters, numbers, underscore.</div>
 
-            <label for="password">Password</label>
+            <label for="password">Password:</label>
             <input
                 type="password"
                 id="password"
                 name="password"
-                placeholder="sample: Encrypt!9"
+                placeholder="example: MyPass!23"
                 required
                 minlength="8"
                 maxlength="16"
                 pattern="[A-Za-z0-9_!@#$%^&*()]{8,16}"
-                title="8–16 characters: letters, digits, underscore, and !@#$%^&*()"
             />
-            <div class="hint">Allowed: letters, digits, underscore, and !@#$%^&*(). Length of: 8–16.</div>
+            <div class="hint">Length of 8–16 characters. Special chars allowed: !@#$%^&*()</div>
 
             <div class="button-row">
                 <button type="reset" class="btn-secondary">Reset</button>
