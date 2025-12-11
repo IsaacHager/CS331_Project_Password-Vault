@@ -6,7 +6,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #ececec;
+            background: #e9eaec;
             margin: 0;
             padding: 0;
         }
@@ -14,21 +14,22 @@
         .container {
             max-width: 420px;
             margin: 40px auto;
-            background: #fff;
+            background: #ffffff;
             padding: 25px;
             border-radius: 6px;
-            border: 1px solid #ccc;
+            border: 1px solid #cfcfcf;
         }
 
         h1 {
             text-align: center;
             margin: 0 0 15px 0;
+            font-weight: normal;
         }
 
         .usage {
             font-size: 12px;
-            background: #f7f7f7;
-            border: 1px solid #ccc;
+            background: #f5f5f5;
+            border: 1px solid #cccccc;
             padding: 10px;
             border-radius: 4px;
             margin-bottom: 18px;
@@ -38,8 +39,8 @@
         label {
             display: block;
             margin-top: 12px;
-            font-weight: bold;
             font-size: 14px;
+            font-weight: bold;
         }
 
         input[type="text"],
@@ -47,16 +48,16 @@
         select {
             width: 100%;
             padding: 7px;
-            margin-top: 5px;
+            margin-top: 6px;
             border-radius: 4px;
-            border: 1px solid #bbb;
-            box-sizing: border-box;
+            border: 1px solid #bdbdbd;
             font-size: 14px;
+            box-sizing: border-box;
         }
 
         .hint {
             font-size: 11px;
-            color: #666;
+            color: #555;
             margin-top: 3px;
         }
 
@@ -76,13 +77,13 @@
         }
 
         .btn-primary {
-            background: #4d8ae6;
-            color: white;
-            border-color: #4d8ae6;
+            background: #4d82d8;
+            color: #fff;
+            border-color: #4d82d8;
         }
 
         .btn-secondary {
-            background: #e6e6e6;
+            background: #e4e4e4;
         }
     </style>
 </head>
@@ -91,51 +92,49 @@
         <h1>Password Manager</h1>
 
         <div class="usage">
-            Command Line Usage Equivalent:
+            Quick CLI Equivalent:
             java UserLoginUI &lt;add|login&gt; &lt;username&gt; &lt;password&gt; 
 
-            Where: 
-            Add - Adds a user to the database 
-            Login - Verifies a user against the database 
-            Username - [A-Za-z0-9_]{4,16} 
-            Password - [A-Za-z0-9_!@#$%^&*()]{8,16}
+            add    - create a new user  
+            login  - check a user’s credentials  
+            username: letters, numbers, _ (4–16 chars)  
+            password: letters, numbers, symbols (8–16 chars)
         </div>
 
-        <!-- Form for local testing -->
         <form action="http://localhost:8080/user-login" method="post">
-            <label for="mode">Mode:</label>
+            <label for="mode">Mode</label>
             <select id="mode" name="mode" required>
-                <option value="">-- choose one --</option>
+                <option value="">-- pick an option --</option>
                 <option value="add">Add (Creates user)</option>
-                <option value="login">Login (Checks user)</option>
+                <option value="login">Login (checks user)</option>
             </select>
-            <div class="hint">Pick whether you're adding or logging in.</div>
+            <div class="hint">Choose what you want to do (Login or Add User).</div>
 
-            <label for="username">Username:</label>
+            <label for="username">Username</label>
             <input
                 type="text"
                 id="username"
                 name="username"
-                placeholder="example: test_user"
+                placeholder="ex: test_user"
                 required
                 minlength="4"
                 maxlength="16"
                 pattern="[A-Za-z0-9_]{4,16}"
             />
-            <div class="hint">Length of 4–16 characters: letters, numbers, underscore.</div>
+            <div class="hint">4–16 characters: letters, numbers, underscore.</div>
 
-            <label for="password">Password:</label>
+            <label for="password">Password</label>
             <input
                 type="password"
                 id="password"
                 name="password"
-                placeholder="example: MyPass!23"
+                placeholder="ex: MyPass!23"
                 required
                 minlength="8"
                 maxlength="16"
                 pattern="[A-Za-z0-9_!@#$%^&*()]{8,16}"
             />
-            <div class="hint">Length of 8–16 characters. Special chars allowed: !@#$%^&*()</div>
+            <div class="hint">8–16 characters; symbols like !@#$%^&*() work too.</div>
 
             <div class="button-row">
                 <button type="reset" class="btn-secondary">Reset</button>
