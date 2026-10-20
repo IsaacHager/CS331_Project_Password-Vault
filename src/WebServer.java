@@ -12,21 +12,20 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Serves index.html and handles its login form over a plain HTTP API.
+ *
+ * Usage: javac -d . src/*.java && java -cp . WebServer
+ * Then open http://localhost:8080 in a browser. Ctrl+C to stop.
+ */
 public class WebServer {
 
-
-
-    // *USAGE!!!! ONCE YOU HAVE EVERYTHING TOGETHER you must run javac src*.java to complile all of the source files then run
-    // "java -cp src WebServer" in terminal
-    // once this is done, if everything is working you will see it says "Server running on http://localhost:8080"
-    // After which the index shoudl be able to link to the stdDB.txt and write the passwords into it
-    // once done you can return to the terminal and use ctrl + c to stop the server
+    private static final String USERNAME_PATTERN = "[A-Za-z0-9_]{4,16}";
+    private static final String PASSWORD_PATTERN = "[A-Za-z0-9_!@#$%^&*()]{8,16}";
 
     public static void main(String[] args) throws IOException {
-        
         PasswordManager pm = new PasswordManager();
 
-        
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
         System.out.println("Server running on http://localhost:8080");
 
@@ -68,16 +67,19 @@ public class WebServer {
 
             String html;
 
-            // Checks if user actually did everything correctly 
+            // Checks if user actually did everything correctly
             if (mode == null || username == null || password == null) {
                 html = withBackLink("<h1>Error</h1><p>Missing parameters.</p>");
-            } else if (!username.matches("[A-Za-z0-9_]{1,16}")) {
+            } else if (!username.matches(USERNAME_PATTERN)) {
                 html = withBackLink("<h1>Error</h1><p>Invalid username.</p>");
-            } else if (!password.matches("[A-Za-z0-9_!@#$%^&*()]{1,16}")) {
+            } else if (!password.matches(PASSWORD_PATTERN)) {
                 html = withBackLink("<h1>Error</h1><p>Invalid password.</p>");
             } else if ("add".equals(mode)) {
-                pm.addUser(username, password);
-                html = withBackLink("<h1>User added</h1><p>User '" + username + "' succesfully added.</p>");
+                if (pm.addUser(username, password)) {
+                    html = withBackLink("<h1>User added</h1><p>User '" + username + "' successfully added.</p>");
+                } else {
+                    html = withBackLink("<h1>Add failed</h1><p>Username '" + username + "' is already taken.</p>");
+                }
             } else if ("login".equals(mode)) {
                 boolean ok = pm.verifyPassword(username, password);
                 if (ok) {
@@ -85,8 +87,15 @@ public class WebServer {
                 } else {
                     html = withBackLink("<h1>Login failed</h1><p>Incorrect username or password.</p>");
                 }
+            } else if ("remove".equals(mode)) {
+                boolean ok = pm.removeUser(username, password);
+                if (ok) {
+                    html = withBackLink("<h1>User removed</h1><p>User '" + username + "' was removed.</p>");
+                } else {
+                    html = withBackLink("<h1>Remove failed</h1><p>Incorrect username or password.</p>");
+                }
             } else {
-                html = withBackLink("<h1>Error</h1><p>Mode must be 'add' or 'login'.</p>");
+                html = withBackLink("<h1>Error</h1><p>Mode must be 'add', 'login', or 'remove'.</p>");
             }
 
             sendHtml(exchange, html);

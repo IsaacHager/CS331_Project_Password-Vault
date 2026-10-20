@@ -3,18 +3,19 @@
  * add a password to the password database as well as
  * verify a password against the database.
  * 
- * Usage: $ java UserLoginUI <add|login> <username> <password> [<debug_lvl>]
+ * Usage: $ java UserLoginUI <add|login|remove> <username> <password> [<debug_lvl>]
  * where  add - adds a user to the database
  *        login - verifies a user against the database
- *        username - [A-Za-z0-9_]{1,16}
- *        password - [A-Za-z0-9_!@#$%^&*()]{1,16}
+ *        remove - removes a user from the database (requires correct password)
+ *        username - [A-Za-z0-9_]{4,16}
+ *        password - [A-Za-z0-9_!@#$%^&*()]{8,16}
  *        debug_lvl - currently unused, defaults to 0
  *
  * @version 1.0
  * @author Isaac Hager
  */
 public class UserLoginUI {
-  private final String USAGE = "Usage: $ java UserLoginUI <add|login> <username> <password>";
+  private final String USAGE = "Usage: $ java UserLoginUI <add|login|remove> <username> <password>";
   private final boolean DEBUG_SUPPORTED = false;
   private String mode;
   private String username;
@@ -33,12 +34,22 @@ public class UserLoginUI {
     }
 
     if (ui.mode.equals("add")) {
-      ui.pm.addUser(ui.username, ui.password);
+      if (ui.pm.addUser(ui.username, ui.password)) {
+        System.out.println("User added");
+      } else {
+        System.out.println("Add failed: username already taken");
+      }
     } else if (ui.mode.equals("login")) {
       if (ui.pm.verifyPassword(ui.username, ui.password)) {
         System.out.println("Login successful"); // This is all that logging in currently does.
       } else {
         System.out.println("Login failed");
+      }
+    } else if (ui.mode.equals("remove")) {
+      if (ui.pm.removeUser(ui.username, ui.password)) {
+        System.out.println("User removed");
+      } else {
+        System.out.println("Remove failed: incorrect username or password");
       }
     } else {
       System.out.println("Invalid mode. This should never happen.");
@@ -67,10 +78,10 @@ public class UserLoginUI {
       valid = false;
     } else {
       /* First arg */
-      if (args[0].equals("add") || args[0].equals("login")) {
+      if (args[0].equals("add") || args[0].equals("login") || args[0].equals("remove")) {
         this.mode = args[0];
       } else {
-        System.out.println("Invalid mode. Must be 'add' or 'login'.");
+        System.out.println("Invalid mode. Must be 'add', 'login', or 'remove'.");
         System.out.println(USAGE);
         valid = false;
       }

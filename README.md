@@ -3,17 +3,56 @@ Group repository for CS331 project to implement a simple password vault.
 
 ### Description of Files
 
-  UserLoginUI.java - Simple Java command line implementation of an interface to allow users to 
-    add passwords to database and 'login'.
-    
-  PasswordManager.java - Provides functionality for encrypting and adding passwords to the database,
+  UserLoginUI.java - Simple Java command line implementation of an interface to allow users to
+    add, remove, and 'login' with passwords against the database.
+
+  WebServer.java - Minimal HTTP server (no external dependencies) that serves index.html and
+    exposes the same add/login/remove actions over a web form.
+
+  PasswordManager.java - Provides functionality for hashing and adding passwords to the database,
     verifying passwords, etc.
-    
+
   PasswordDatabase.java - Contains a hashmap of passwords and usernames and functionality to write and read stored data
     to a file.
-    
+
+  index.html - Web form front end for WebServer.java.
+
   README.md - This file
-  
+
+### How to Build & Run
+
+  Command line:
+  ```
+  javac -d . src/*.java
+  java -cp . UserLoginUI <add|login|remove> <username> <password>
+  ```
+
+  Web server:
+  ```
+  javac -d . src/*.java
+  java -cp . WebServer
+  ```
+  Then open http://localhost:8080 in a browser. Ctrl+C to stop the server.
+
+  Username: 4-16 characters, letters/numbers/underscore.
+  Password: 8-16 characters, letters/numbers/`!@#$%^&*()`.
+
+### Security Design
+
+  Passwords are never stored in plaintext. Each password is hashed with
+  **PBKDF2-HMAC-SHA256** (150,000 iterations) using a **random salt generated
+  per user** (rather than one salt shared across every account), so two users
+  with the same password get different stored hashes and a precomputed
+  rainbow table can't be reused across accounts. The salt is stored
+  alongside the hash in `stdDB.txt` as `username saltHex:hashHex`.
+
+  `addUser` rejects the request if the username already exists, so a
+  duplicate "add" can't be used to silently overwrite another user's
+  password without proving knowledge of it. `removeUser` requires the
+  correct password before deleting an account. These map to the course's
+  authentication (proof of identity before login/removal) and confidentiality
+  (secure storage) concepts.
+
 ## Project Desc.
 *Temporary inclusion for convenience
 
